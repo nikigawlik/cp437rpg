@@ -1,0 +1,5 @@
+{
+    "name": "codepage437engine",
+    "version": "1.0.0",
+    "description": "A lightweight engine for text based games using the codepage 437 character set."
+}
