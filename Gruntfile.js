@@ -28,12 +28,17 @@ module.exports = function (grunt) {
                     },
                 }
             }
-        }
+        },
+        watch: {
+            files: "project/src/**/*",
+            tasks: "default",
+        },
     });
 
     // load plugins
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-html-build');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     // default tasks
     grunt.registerTask("default", ["copy:test", "htmlbuild:test"]);
