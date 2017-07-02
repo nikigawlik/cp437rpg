@@ -1,8 +1,10 @@
 {
-    "name": "codepage437engine",
-    "version": "1.0.0",
-    "description": "A lightweight engine for text based games using the codepage 437 character set.",
-    "devDependencies": {
-        "grunt": "~1.0.1"
-    }
+  "name": "codepage437engine",
+  "version": "1.0.0",
+  "description": "A lightweight engine for text based games using the codepage 437 character set.",
+  "devDependencies": {
+    "grunt": "~1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-html-build": "^0.7.1"
+  }
 }
