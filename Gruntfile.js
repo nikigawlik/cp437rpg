@@ -4,45 +4,55 @@ module.exports = function (grunt) {
         fixturesPath: "fixtures",
 
         // pkg: grunt.file.readJSON("package.json"),
+        watch: {
+            files: "project/src/**/*",
+            tasks: "default",
+        },
         copy: {
             test: {
                 expand: true,
                 cwd: 'project/src/',
-                src: '**',
+                src: ['**/*'],
                 dest: 'project/test/',
                 flatten: true,
                 filter: 'isFile',
             },
         },
+        ts: {
+            test: {
+                src: 'project/test/**/*.ts',
+                outDir: 'project/test',
+                options: {
+                    rootDir: 'project/test',
+                }
+            }
+        },
         htmlbuild: {
             test: {
                 expand: true,
-                cwd: "project/src",
+                cwd: "project/test",
                 src: 'index.html',
                 dest: 'project/test/',
                 options: {
                     scripts: {
                         gamefiles: [
-                            'project/src/*.js',
+                            'project/test/**/*.js',
                         ],
                     },
                 }
             }
         },
-        watch: {
-            files: "project/src/**/*",
-            tasks: "default",
-        },
     });
 
     // load plugins
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-ts');
     grunt.loadNpmTasks('grunt-html-build');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     // default tasks
-    grunt.registerTask("default", ["copy:test", "htmlbuild:test"]);
-    
+    grunt.registerTask("default", ["copy:test", "ts:test", "htmlbuild:test"]);
+
     // other tasks
     // grunt.registerTask("build", ["copy:build"]);
 };
