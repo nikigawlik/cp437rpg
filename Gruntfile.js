@@ -24,6 +24,7 @@ module.exports = function (grunt) {
                 outDir: 'project/test',
                 options: {
                     rootDir: 'project/test',
+                    strictNullChecks: true,
                 }
             }
         },
