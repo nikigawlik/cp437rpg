@@ -38,6 +38,10 @@ module.exports = function (grunt) {
                     scripts: {
                         gamefiles: [
                             'project/test/**/*.js',
+                            '!project/test/**/main.js',
+                        ],
+                        mainfile: [
+                            'project/test/**/main.js'
                         ],
                     },
                 }
