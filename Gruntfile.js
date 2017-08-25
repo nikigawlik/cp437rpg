@@ -8,6 +8,11 @@ module.exports = function (grunt) {
             files: "project/src/**/*",
             tasks: "default",
         },
+        clean: {
+            test: {
+                src: ["project/test/**/*.*"],
+            },
+        },
         copy: {
             test: {
                 expand: true,
@@ -51,12 +56,13 @@ module.exports = function (grunt) {
 
     // load plugins
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-ts');
     grunt.loadNpmTasks('grunt-html-build');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     // default tasks
-    grunt.registerTask("default", ["copy:test", "ts:test", "htmlbuild:test"]);
+    grunt.registerTask("default", ["clean:test", "copy:test", "ts:test", "htmlbuild:test"]);
 
     // other tasks
     // grunt.registerTask("build", ["copy:build"]);
