@@ -5,7 +5,7 @@ class ArrayUtils {
         for(let y = 0; y < height; y++){
             array.push([]);
             for(let x = 0; x < width; x++) {
-                array[x].push(initialValue);
+                array[y].push(initialValue);
             }
         }
 
