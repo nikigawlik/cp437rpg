@@ -6,6 +6,8 @@ class SettingsManager {
             tilesetHeight: 12*16,
             tilesetTileWidth: 12,
             tilesetTileHeight: 12,
+            canvasWidth: 64,
+            canvasHeight: 32,
         };
     }
 }

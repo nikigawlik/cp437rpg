@@ -1,9 +1,11 @@
 interface GameSettings {
-    tilesetPath : string;
-    tilesetWidth : number;
-    tilesetHeight : number;
-    tilesetTileWidth : number;
-    tilesetTileHeight : number;
+    tilesetPath : string; // path to the image file
+    tilesetWidth : number; // width of the image file  
+    tilesetHeight : number; // height of the image file
+    tilesetTileWidth : number; // width of one tile
+    tilesetTileHeight : number; // height of one tile
+    canvasHeight : number; // height of the game canvas in tiles
+    canvasWidth : number; // width of the game canvas in tiles
 }
 
 class Game {
@@ -31,6 +33,6 @@ class Game {
     }
 
     createCanvas() : Canvas {
-        return new Canvas(80, 52);
+        return new Canvas(this.settings.canvasWidth, this.settings.canvasHeight);
     }
 }

@@ -15,6 +15,7 @@ class Canvas {
         this.canvas = document.createElement("canvas");
         this.canvas.width = this.width * game.tileset.tileWidth;
         this.canvas.height = this.height * game.tileset.tileHeight;
+        this.canvas.className = "crisp-rendering autoscale"; // reference style.css file
 
 
         let ctx : CanvasRenderingContext2D | null = this.canvas.getContext("2d");
