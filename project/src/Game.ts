@@ -11,6 +11,8 @@ interface GameSettings {
 class Game {
     public tileset : Tileset;
     public canvas : Canvas;
+    public debug : Debug;
+    public input : InputHandler;
 
     settings : GameSettings;
 
@@ -21,6 +23,8 @@ class Game {
     intialize() : void{
         this.tileset = this.createTileset();
         this.canvas = this.createCanvas();
+        this.debug = new Debug();
+        this.input = new InputHandler(this.canvas.canvas);
     }
 
     createTileset() : Tileset {
