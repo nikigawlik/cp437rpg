@@ -25,6 +25,7 @@ class Game {
         this.canvas = this.createCanvas();
         this.debug = new Debug();
         this.input = new InputHandler(this.canvas.canvas);
+        this.canvas.initializeComponents();
     }
 
     createTileset() : Tileset {

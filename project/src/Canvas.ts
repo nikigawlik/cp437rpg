@@ -4,6 +4,9 @@ class Canvas {
     displayGrid : number[][];
     canvas : HTMLCanvasElement;
     backgroundStyle : String = "black";
+
+    // components
+    cInput : CInput;
     
     constructor(width : number, height : number) {
         this.width = Math.floor(width);
@@ -16,7 +19,6 @@ class Canvas {
         this.canvas.width = this.width * game.tileset.tileWidth;
         this.canvas.height = this.height * game.tileset.tileHeight;
         this.canvas.className = "crisp-rendering autoscale"; // reference style.css file
-
 
         let ctx : CanvasRenderingContext2D | null = this.canvas.getContext("2d");
         if (!ctx) {return;}
@@ -31,6 +33,16 @@ class Canvas {
         if (container) {
             container.appendChild(this.canvas);
         }
+    }
+
+    initializeComponents() {
+        this.cInput = new CInput(this.onClick);
+    }
+
+    onClick(x : number, y : number) {
+        let xx = Math.floor(x / game.tileset.tileWidth);
+        let yy = Math.floor(y / game.tileset.tileHeight);
+        console.log(x, y, "-", xx, yy);
     }
 
     setTile(x : number, y: number, tileId : number) {
