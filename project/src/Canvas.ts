@@ -36,18 +36,26 @@ class Canvas {
     }
 
     initializeComponents() {
-        this.cInput = new CInput(this.onClick);
+        this.cInput = new CInput((x : number, y : number) => this.onClick(x, y));
     }
 
     onClick(x : number, y : number) {
         let xx = Math.floor(x / game.tileset.tileWidth);
         let yy = Math.floor(y / game.tileset.tileHeight);
-        console.log(x, y, "-", xx, yy);
+        let tileID : number = this.getTileAt(xx, yy) + 1;
+        tileID = tileID % 256; // meh
+        this.setTile(xx, yy, tileID);
     }
 
     setTile(x : number, y: number, tileId : number) {
         this.displayGrid[x][y] = tileId;
         this.refreshTile(x, y);
+    }
+
+    getTileAt(x : number, y : number) : number {
+        x = Math.min(Math.max(0, x), this.displayGrid.length);
+        y = Math.min(Math.max(0, y), this.displayGrid[x].length);
+        return this.displayGrid[x][y];
     }
 
     refreshTile(x, y) {
