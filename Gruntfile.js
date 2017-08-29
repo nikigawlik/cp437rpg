@@ -25,10 +25,11 @@ module.exports = function (grunt) {
         },
         ts: {
             test: {
-                src: 'project/test/**/*.ts',
+                src: 'project/src/**/*.ts',
                 outDir: 'project/test',
+                tsconfig: "project/src/tsconfig.json",
                 options: {
-                    rootDir: 'project/test',
+                    rootDir: 'project/src',
                     strictNullChecks: true,
                 }
             }
