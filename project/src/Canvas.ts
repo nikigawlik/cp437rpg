@@ -4,6 +4,7 @@ class Canvas {
     displayGrid : number[][];
     canvas : HTMLCanvasElement;
     backgroundStyle : String = "black";
+    tile : number | null = null;
 
     // components
     cInput : CInput;
@@ -42,9 +43,12 @@ class Canvas {
     onClick(x : number, y : number) {
         let xx = Math.floor(x / game.tileset.tileWidth);
         let yy = Math.floor(y / game.tileset.tileHeight);
-        let tileID : number = this.getTileAt(xx, yy) + 1;
-        tileID = tileID % 256; // meh
-        this.setTile(xx, yy, tileID);
+
+        if (this.tile === null || yy * game.settings.canvasWidth + xx < 256) {
+            this.tile = this.getTileAt(xx, yy);
+        } else {
+            this.setTile(xx, yy, this.tile);
+        }
     }
 
     setTile(x : number, y: number, tileId : number) {
