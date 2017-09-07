@@ -3,7 +3,7 @@ class Canvas {
     height : number;
     displayGrid : number[][];
     canvas : HTMLCanvasElement;
-    backgroundStyle : String = "black";
+    backgroundStyle : string = "black";
     tile : number | null = null;
 
     // components
@@ -37,10 +37,17 @@ class Canvas {
     }
 
     initializeComponents() {
-        this.cInput = new CInput((x : number, y : number) => this.onClick(x, y));
+        this.cInput = new CInput(
+            (x : number, y : number) => this.onClick(x, y),
+            (key : string) => this.processKey(key) // TODO proper stuff
+            );
     }
 
-    onClick(x : number, y : number) {
+    private processKey(key : string) {
+        game.debug.log("key: " + key)
+    }
+
+    private onClick(x : number, y : number) {
         let xx = Math.floor(x / game.tileset.tileWidth);
         let yy = Math.floor(y / game.tileset.tileHeight);
 
@@ -62,7 +69,7 @@ class Canvas {
         return this.displayGrid[x][y];
     }
 
-    refreshTile(x, y) {
+    private refreshTile(x, y) {
         let ctx : CanvasRenderingContext2D | null = this.canvas.getContext("2d");
         if (!ctx) {return;}
 

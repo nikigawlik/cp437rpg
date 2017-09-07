@@ -13,6 +13,7 @@ class InputHandler {
     }
 
     private hookUpEvents() {
+        document.onkeyup = this.onKeyUp.bind(this);
         this.canvas.onclick = this.onClick.bind(this);
         this.canvas.onmousedown = this.onMouseDown.bind(this);
         this.canvas.onmouseup = this.onMouseUp.bind(this);
@@ -33,6 +34,12 @@ class InputHandler {
     }
 
     // events:
+
+    private onKeyUp(event : KeyboardEvent) {
+        for(let cInput of this.listeners) {
+            cInput.onKeyPress(event.key);
+        }
+    }
     
     private onClick(event : MouseEvent) {
         let x = event.offsetX * this.canvas.width / this.canvas.offsetWidth;

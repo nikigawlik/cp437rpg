@@ -2,12 +2,20 @@ interface OnClickFunction {
     (x : number, y : number) : void;
 }
 
+interface OnKeyPressFunction {
+    (key : string) : void;
+}
+
 class CInput extends Component {
     public onClick : OnClickFunction;
+    public onKeyPress : OnKeyPressFunction;
 
-    constructor(onClick : OnClickFunction | null) {
+    constructor(onClick : OnClickFunction | null, onKeyPress : OnKeyPressFunction | null) {
         super();
+        
         this.onClick = onClick? onClick : function () {};
+        this.onKeyPress = onKeyPress? onKeyPress : function () {};
+
         game.input.addListener(this);
     }
 
