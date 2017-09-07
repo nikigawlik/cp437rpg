@@ -4,16 +4,19 @@ class InputHandler {
     isMouseDown : boolean;
     canvas : HTMLCanvasElement;
     listeners : CInput[];
+    keyMap : {[key : string] : boolean}; // tracks which keys are down
 
     constructor(canvas : HTMLCanvasElement) {
         this.canvas = canvas;
         this.listeners = [];
+        this.keyMap = {}
 
         this.hookUpEvents();
     }
 
     private hookUpEvents() {
         document.onkeyup = this.onKeyUp.bind(this);
+        document.onkeydown = this.onKeyDown.bind(this);
         this.canvas.onclick = this.onClick.bind(this);
         this.canvas.onmousedown = this.onMouseDown.bind(this);
         this.canvas.onmouseup = this.onMouseUp.bind(this);
@@ -39,6 +42,17 @@ class InputHandler {
         for(let cInput of this.listeners) {
             cInput.onKeyPress(event.key);
         }
+        this.updateButtonState(event.key, false);
+    }
+
+    private onKeyDown(event : KeyboardEvent) {
+        for(let cInput of this.listeners) {
+        }
+        this.updateButtonState(event.key, true);
+    }
+
+    private updateButtonState(key : string, newState : boolean) {
+        this.keyMap[key] = newState;
     }
     
     private onClick(event : MouseEvent) {
@@ -67,5 +81,9 @@ class InputHandler {
 
     private onMouseMove() {
         //stub
+    }
+
+    public isDown(key : string) {
+        return this.keyMap[key]? true : false; // covers false and undefined
     }
 }

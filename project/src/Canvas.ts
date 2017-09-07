@@ -51,7 +51,7 @@ class Canvas {
         let xx = Math.floor(x / game.tileset.tileWidth);
         let yy = Math.floor(y / game.tileset.tileHeight);
 
-        if (this.tile === null || yy * game.settings.canvasWidth + xx < 256) {
+        if (this.tile === null || yy * game.settings.canvasWidth + xx < 256 || game.input.isDown("Control")) {
             this.tile = this.getTileAt(xx, yy);
         } else {
             this.setTile(xx, yy, this.tile);

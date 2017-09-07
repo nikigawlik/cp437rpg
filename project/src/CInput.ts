@@ -23,4 +23,8 @@ class CInput extends Component {
         game.input.removeListener(this);
         super.free();
     }
+
+    public isDown(key : string) : boolean {
+        return game.input.isDown(key); // pass job to input handler
+    }
 }
