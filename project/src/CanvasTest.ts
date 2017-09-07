@@ -9,7 +9,8 @@ class CanvasTest {
             if ( y * game.settings.canvasWidth + x < 256) {
                 tileID = y * game.settings.canvasWidth + x;
             }
-            canvas.setTile(x, y, tileID);
+            let colorID = Math.floor(Math.random() * game.palette.numberOfCOlors);
+            canvas.setTile(x, y, {tileID: tileID, colorID: colorID});
         }
     }
 }

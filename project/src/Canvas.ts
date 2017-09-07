@@ -1,10 +1,15 @@
+interface Tile {
+    tileID: number,
+    colorID: number,
+}
+
 class Canvas {
     width : number;
     height : number;
-    displayGrid : number[][];
+    displayGrid : Tile[][];
     canvas : HTMLCanvasElement;
     backgroundStyle : string = "black";
-    tile : number | null = null;
+    tile : Tile | null = null;
 
     // components
     cInput : CInput;
@@ -13,7 +18,7 @@ class Canvas {
         this.width = Math.floor(width);
         this.height = Math.floor(height);
         
-        this.displayGrid = ArrayUtils.get2DArray<number>(this.width, this.height, 0);
+        this.displayGrid = ArrayUtils.get2DArray<Tile>(this.width, this.height, {tileID: 0, colorID: 0});
         
         // initianlize canvas
         this.canvas = document.createElement("canvas");
@@ -58,12 +63,12 @@ class Canvas {
         }
     }
 
-    setTile(x : number, y: number, tileId : number) {
-        this.displayGrid[x][y] = tileId;
+    setTile(x : number, y: number, tile : Tile) {
+        this.displayGrid[x][y] = tile;
         this.refreshTile(x, y);
     }
 
-    getTileAt(x : number, y : number) : number {
+    getTileAt(x : number, y : number) : Tile {
         x = Math.min(Math.max(0, x), this.displayGrid.length);
         y = Math.min(Math.max(0, y), this.displayGrid[x].length);
         return this.displayGrid[x][y];
@@ -84,7 +89,8 @@ class Canvas {
         // draw foreground
         game.tileset.drawTile(
             this.canvas, 
-            this.displayGrid[x][y], 
+            this.displayGrid[x][y].tileID, 
+            this.displayGrid[x][y].colorID, 
             x * game.tileset.tileWidth, 
             y * game.tileset.tileHeight, 
             game.tileset.tileWidth, 

@@ -4,6 +4,7 @@ interface GameSettings {
     tilesetHeight : number; // height of the image file
     tilesetTileWidth : number; // width of one tile
     tilesetTileHeight : number; // height of one tile
+    colorPalette : string[], // list of color names or hex codes in the default palette
     canvasHeight : number; // height of the game canvas in tiles
     canvasWidth : number; // width of the game canvas in tiles
 }
@@ -13,6 +14,7 @@ class Game {
     public canvas : Canvas;
     public debug : Debug;
     public input : InputHandler;
+    public palette : ColorPalette;
 
     settings : GameSettings;
 
@@ -21,9 +23,10 @@ class Game {
     }
 
     intialize() : void{
+        this.debug = new Debug();
+        this.palette = new ColorPalette(this.settings.colorPalette);
         this.tileset = this.createTileset();
         this.canvas = this.createCanvas();
-        this.debug = new Debug();
         this.input = new InputHandler(this.canvas.canvas);
         this.canvas.initializeComponents();
     }
