@@ -10,11 +10,30 @@ class GameWorld {
         this.height = height;
         this.canvas = canvas;
 
-        this.objectGrid = ArrayUtils.get2DArray<GameObject[]>(width, height, []);
+        this.objectGrid = ArrayUtils.get2DArrayDynamic<GameObject[]>(width, height, (x : number, y : number) => []);
+    }
+
+    public loadFromSave(saveName : string) {
+        let data : string | null = localStorage.getItem(saveName);
+        if (!data) {return;}
+        
+        let obj : any = JSON.parse(data); // TODO optimize this :'D
+        let grid : Tile[][] = obj.displayGrid;
+        
+        for(let x = 0; x < obj.width; x++)
+        for(let y = 0; y < obj.height; y++) {
+            let tile : Tile = grid[x][y];
+            this.insertObject(new FloorTile(x, y, tile), 0);
+        }
     }
 
     public addObject(obj : GameObject) {
         this.objectGrid[obj.x][obj.y].push(obj);
+        this.refreshAtPos(obj.x, obj.y);
+    }
+
+    public insertObject(obj : GameObject, pos : number) {
+        this.objectGrid[obj.x][obj.y].splice(pos, 0, obj);
         this.refreshAtPos(obj.x, obj.y);
     }
 

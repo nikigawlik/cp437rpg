@@ -7,6 +7,6 @@ window.onload = function () {
     game.intialize();
 
     setTimeout(function () {
-        let ct = new CanvasTest();
+        let t = new TestController();
     }, 300);
 }

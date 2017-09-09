@@ -36,8 +36,6 @@ class CanvasTest {
             }
             canvas.setTile(x, y, {tileID: tileID, colorID: colorID, bgColorID: bgColorId});
         }
-
-        game.world.addObject(new Player(1, 6, game.world));
     }
 
     
