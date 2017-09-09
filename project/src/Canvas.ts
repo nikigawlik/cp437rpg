@@ -91,6 +91,7 @@ class Canvas implements ISerializable{
             if (!this.selection) {
                 this.selection = new Rect(xx, yy, 0, 0);
             } else {
+                //rect mode
                 let dx = xx - this.selection.x;
                 let dy = yy - this.selection.y;
                 if (dx < 0) {this.selection.x += dx;}
