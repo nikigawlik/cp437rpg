@@ -17,6 +17,7 @@ class Game implements ISerializable {
     public debug : Debug;
     public input : InputHandler;
     public palette : ColorPalette;
+    public world : GameWorld;
 
     private cInput : CInput;
 
@@ -31,6 +32,7 @@ class Game implements ISerializable {
         this.palette = new ColorPalette(this.settings.colorPalette);
         this.tileset = this.createTileset();
         this.canvas = this.createCanvas();
+        this.world = new GameWorld(this.settings.canvasWidth, this.settings.canvasHeight, this.canvas); // TODO make world width variable from canvas
         this.input = new InputHandler(this.canvas.canvas);
         this.canvas.initializeComponents();
         this.initializeComponents();
