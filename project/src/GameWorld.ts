@@ -10,10 +10,12 @@ class GameWorld {
         this.height = height;
         this.canvas = canvas;
 
-        this.objectGrid = ArrayUtils.get2DArrayDynamic<GameObject[]>(width, height, (x : number, y : number) => []);
+        this.fillGridEmpty();
     }
 
     public loadFromSave(saveName : string) {
+        this.fillGridEmpty();
+
         let data : string | null = localStorage.getItem(saveName);
         if (!data) {return;}
         
@@ -23,8 +25,12 @@ class GameWorld {
         for(let x = 0; x < obj.width; x++)
         for(let y = 0; y < obj.height; y++) {
             let tile : Tile = grid[x][y];
-            this.insertObject(new FloorTile(x, y, tile), 0);
+            this.insertObject(new FloorTile(x, y, tile), 0); // TODO differing sizes save vs. game
         }
+    }
+
+    public fillGridEmpty() {
+        this.objectGrid = ArrayUtils.get2DArrayDynamic<GameObject[]>(this.width, this.height, (x : number, y : number) => []);
     }
 
     public addObject(obj : GameObject) {
