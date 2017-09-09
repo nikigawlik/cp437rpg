@@ -9,7 +9,9 @@ class Canvas implements ISerializable{
     displayGrid : Tile[][];
     canvas : HTMLCanvasElement;
     backgroundStyle : string = "black";
+
     tile : Tile | null = null;
+    selection : Rect | null = null;
 
     // components
     cInput : CInput;
@@ -72,6 +74,10 @@ class Canvas implements ISerializable{
 
     private processKey(key : string) {
         game.debug.log("key: " + key)
+
+        if (key === "Shift") {
+            this.selection = null; // TODO do this in and "up" event (for clarity and robustness)
+        }
     }
 
     private onClick(x : number, y : number) {
@@ -80,6 +86,26 @@ class Canvas implements ISerializable{
 
         if (this.tile === null || yy * game.settings.canvasWidth + xx < 256 || game.input.isDown("Control")) {
             this.tile = this.getTileAt(xx, yy);
+        } else 
+        if (game.input.isDown("Shift")) {
+            if (!this.selection) {
+                this.selection = new Rect(xx, yy, 0, 0);
+            } else {
+                let dx = xx - this.selection.x;
+                let dy = yy - this.selection.y;
+                if (dx < 0) {this.selection.x += dx;}
+                if (dy < 0) {this.selection.y += dy;}
+                this.selection.w = Math.abs(dx) + 1;
+                this.selection.h = Math.abs(dy) + 1;
+
+                
+                for(let x = this.selection.x; x < this.selection.x + this.selection.w; x++)
+                for(let y = this.selection.y; y < this.selection.y + this.selection.h; y++) {
+                    this.setTile(x, y, this.tile);
+                }
+
+                this.selection = null;
+            }
         } else {
             this.setTile(xx, yy, this.tile);
         }
