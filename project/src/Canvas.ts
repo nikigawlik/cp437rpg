@@ -4,12 +4,6 @@ class Canvas implements ISerializable{
     displayGrid : Tile[][];
     canvas : HTMLCanvasElement;
     backgroundStyle : string = "black";
-
-    tile : Tile | null = null;
-    selection : Rect | null = null;
-
-    // components
-    cInput : CInput;
     
     constructor(width : number, height : number) {
         this.width = Math.floor(width);
@@ -64,67 +58,6 @@ class Canvas implements ISerializable{
         }
 
         return this;
-    }
-
-    initializeComponents() {
-        this.cInput = new CInput(
-            (x : number, y : number) => this.onClick(x, y),
-            (key : string) => this.processKey(key) // TODO proper stuff
-            );
-    }
-
-    private processKey(key : string) {
-        game.debug.log("key: " + key)
-
-        if (key === "Shift") {
-            this.selection = null; // TODO do this in an "up" event (for clarity and robustness)
-        }
-    }
-
-    private onClick(x : number, y : number) {
-        let xx = Math.floor(x / game.tileset.tileWidth);
-        let yy = Math.floor(y / game.tileset.tileHeight);
-        let serial : number = yy * game.settings.canvasWidth + xx;
-
-        if (this.tile === null || game.input.isDown("Control")) {
-            this.tile = {
-                tileID: this.getTileAt(xx, yy).tileID,
-                colorID: this.getTileAt(xx, yy).colorID,
-                bgColorID: this.getTileAt(xx, yy).bgColorID,
-            };
-        } else
-        if (serial < 256) {
-            this.tile.tileID = this.getTileAt(xx, yy).tileID;
-        } else 
-        if (serial < game.palette.numberOfCOlors + 256) {
-            this.tile.colorID = this.getTileAt(xx, yy).colorID;
-        } else 
-        if (serial < game.palette.numberOfCOlors * 2 + 256) {
-            this.tile.bgColorID = this.getTileAt(xx, yy).bgColorID;
-        } else 
-        if (game.input.isDown("Shift")) {
-            if (!this.selection) {
-                this.selection = new Rect(xx, yy, 0, 0);
-            } else {
-                //rect mode
-                let dx = xx - this.selection.x;
-                let dy = yy - this.selection.y;
-                if (dx < 0) {this.selection.x += dx;}
-                if (dy < 0) {this.selection.y += dy;}
-                this.selection.w = Math.abs(dx) + 1;
-                this.selection.h = Math.abs(dy) + 1;
-
-                
-                for(let x = this.selection.x; x < this.selection.x + this.selection.w; x++)
-                for(let y = this.selection.y; y < this.selection.y + this.selection.h; y++) {
-                    this.setTile(x, y, this.tile);
-                }
-
-                this.selection = null;
-            }
-        } else {
-            this.setTile(xx, yy, this.tile);
-        }
     }
 
     setTile(x : number, y: number, tile : Tile) {

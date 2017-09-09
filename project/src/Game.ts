@@ -34,7 +34,6 @@ class Game implements ISerializable {
         this.canvas = this.createCanvas();
         this.world = new GameWorld(this.settings.canvasWidth, this.settings.canvasHeight, this.canvas); // TODO make world width variable from canvas
         this.input = new InputHandler(this.canvas.canvas);
-        this.canvas.initializeComponents();
         this.initializeComponents();
     }
 
