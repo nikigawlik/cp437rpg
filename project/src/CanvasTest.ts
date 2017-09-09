@@ -6,10 +6,16 @@ class CanvasTest {
         for(let y = 0; y < canvas.height; y++)
         {
             let tileID = Math.floor(Math.random() * 256);
-            if ( y * game.settings.canvasWidth + x < 256) {
+            let serial : number = y * game.settings.canvasWidth + x;
+            let colorID = 0;
+            if (serial < 256) {
+                colorID = game.palette.numberOfCOlors - 1; // TODO name colors or something
                 tileID = y * game.settings.canvasWidth + x;
+            } else 
+            if (serial < 256 + game.palette.numberOfCOlors){
+                colorID = serial - 256;
+                tileID = Tiles.Full;
             }
-            let colorID = Math.floor(Math.random() * game.palette.numberOfCOlors);
             canvas.setTile(x, y, {tileID: tileID, colorID: colorID});
         }
     }

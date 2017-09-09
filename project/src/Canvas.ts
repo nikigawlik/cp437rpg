@@ -71,16 +71,23 @@ class Canvas implements ISerializable{
         game.debug.log("key: " + key)
 
         if (key === "Shift") {
-            this.selection = null; // TODO do this in and "up" event (for clarity and robustness)
+            this.selection = null; // TODO do this in an "up" event (for clarity and robustness)
         }
     }
 
     private onClick(x : number, y : number) {
         let xx = Math.floor(x / game.tileset.tileWidth);
         let yy = Math.floor(y / game.tileset.tileHeight);
+        let serial : number = yy * game.settings.canvasWidth + xx;
 
-        if (this.tile === null || yy * game.settings.canvasWidth + xx < 256 || game.input.isDown("Control")) {
+        if (this.tile === null || game.input.isDown("Control")) {
             this.tile = this.getTileAt(xx, yy);
+        } else
+        if (serial < 256) {
+            this.tile.tileID = this.getTileAt(xx, yy).tileID;
+        } else 
+        if (serial < game.palette.numberOfCOlors + 256) {
+            this.tile.colorID = this.getTileAt(xx, yy).colorID;
         } else 
         if (game.input.isDown("Shift")) {
             if (!this.selection) {
