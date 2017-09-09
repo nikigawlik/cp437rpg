@@ -1,8 +1,3 @@
-interface Tile {
-    tileID: number,
-    colorID: number,
-}
-
 class Canvas implements ISerializable{
     width : number;
     height : number;
