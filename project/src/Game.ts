@@ -7,6 +7,8 @@ interface GameSettings {
     colorPalette : string[], // list of color names or hex codes in the default palette
     canvasHeight : number; // height of the game canvas in tiles
     canvasWidth : number; // width of the game canvas in tiles
+    fitCanvas : boolean,
+    canvasScale : number,
 }
 
 class Game implements ISerializable {

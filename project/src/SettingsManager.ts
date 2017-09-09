@@ -14,6 +14,8 @@ class SettingsManager {
                 ],
             canvasWidth: 64,
             canvasHeight: 32,
+            fitCanvas: false,
+            canvasScale: 1.6,
         };
     }
 }

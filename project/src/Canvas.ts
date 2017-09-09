@@ -21,7 +21,13 @@ class Canvas implements ISerializable{
         this.canvas = document.createElement("canvas");
         this.canvas.width = this.width * game.tileset.tileWidth;
         this.canvas.height = this.height * game.tileset.tileHeight;
-        this.canvas.className = "crisp-rendering autoscale"; // reference style.css file
+
+        if (game.settings.fitCanvas) {
+            this.canvas.className = "crisp-rendering autoscale"; // reference style.css file
+        } else {
+            this.canvas.className = "crisp-rendering"; // reference style.css file
+            this.canvas.style.width = (game.settings.canvasScale * this.canvas.width) + "px";
+        }
 
         let ctx : CanvasRenderingContext2D | null = this.canvas.getContext("2d");
         if (!ctx) {return;}
