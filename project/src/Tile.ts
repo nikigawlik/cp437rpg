@@ -1,6 +1,7 @@
 interface Tile {
     tileID: number,
     colorID: number,
+    bgColorID : number,
 }
 
 enum Tiles {

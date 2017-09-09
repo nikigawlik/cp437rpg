@@ -15,7 +15,7 @@ class Canvas implements ISerializable{
         this.width = Math.floor(width);
         this.height = Math.floor(height);
         
-        this.displayGrid = ArrayUtils.get2DArray<Tile>(this.width, this.height, {tileID: 0, colorID: 0});
+        this.displayGrid = ArrayUtils.get2DArray<Tile>(this.width, this.height, {tileID: 0, colorID: 0, bgColorID: 0});
         
         // initianlize canvas
         this.canvas = document.createElement("canvas");
@@ -81,13 +81,20 @@ class Canvas implements ISerializable{
         let serial : number = yy * game.settings.canvasWidth + xx;
 
         if (this.tile === null || game.input.isDown("Control")) {
-            this.tile = this.getTileAt(xx, yy);
+            this.tile = {
+                tileID: this.getTileAt(xx, yy).tileID,
+                colorID: this.getTileAt(xx, yy).colorID,
+                bgColorID: this.getTileAt(xx, yy).bgColorID,
+            };
         } else
         if (serial < 256) {
             this.tile.tileID = this.getTileAt(xx, yy).tileID;
         } else 
         if (serial < game.palette.numberOfCOlors + 256) {
             this.tile.colorID = this.getTileAt(xx, yy).colorID;
+        } else 
+        if (serial < game.palette.numberOfCOlors * 2 + 256) {
+            this.tile.bgColorID = this.getTileAt(xx, yy).bgColorID;
         } else 
         if (game.input.isDown("Shift")) {
             if (!this.selection) {
@@ -115,7 +122,15 @@ class Canvas implements ISerializable{
     }
 
     setTile(x : number, y: number, tile : Tile) {
-        this.displayGrid[x][y] = tile;
+        // TODO why this shit no work???
+        // this.displayGrid[x][y].tileID = tile.tileID;
+        // this.displayGrid[x][y].colorID = tile.colorID;
+        // this.displayGrid[x][y].bgColorID = tile.bgColorID;
+        this.displayGrid[x][y] = {
+            tileID: tile.tileID,
+            colorID: tile.colorID,
+            bgColorID: tile.bgColorID,
+        };
         this.refreshTile(x, y);
     }
 
@@ -129,7 +144,10 @@ class Canvas implements ISerializable{
         let ctx : CanvasRenderingContext2D | null = this.canvas.getContext("2d");
         if (!ctx) {return;}
 
+        let tile : Tile = this.displayGrid[x][y];
+
         // draw background
+        ctx.fillStyle = game.palette.getColor(tile.bgColorID);
         ctx.fillRect(
             x * game.tileset.tileWidth, 
             y * game.tileset.tileHeight, 
@@ -140,8 +158,8 @@ class Canvas implements ISerializable{
         // draw foreground
         game.tileset.drawTile(
             this.canvas, 
-            this.displayGrid[x][y].tileID, 
-            this.displayGrid[x][y].colorID, 
+            tile.tileID, 
+            tile.colorID, 
             x * game.tileset.tileWidth, 
             y * game.tileset.tileHeight, 
             game.tileset.tileWidth, 
