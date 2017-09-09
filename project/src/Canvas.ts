@@ -3,7 +3,7 @@ interface Tile {
     colorID: number,
 }
 
-class Canvas {
+class Canvas implements ISerializable{
     width : number;
     height : number;
     displayGrid : Tile[][];
@@ -39,6 +39,28 @@ class Canvas {
         if (container) {
             container.appendChild(this.canvas);
         }
+    }
+
+    serialize() : string {
+        let obj = { // TODO interface
+            displayGrid: this.displayGrid, // TODO use function to access just in case
+            version: 0,
+            width: this.width,
+            height: this.height,  
+        };
+        return JSON.stringify(obj);
+    }
+
+    unserialize(data : string) : this {
+        let obj : any = JSON.parse(data); // TODO optimize this :'D
+        let grid : Tile[][] = obj.displayGrid;
+        
+        for(let x = 0; x < obj.width; x++)
+        for(let y = 0; y < obj.height; y++) {
+            this.setTile(x, y, grid[x][y]);
+        }
+
+        return this;
     }
 
     initializeComponents() {

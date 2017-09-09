@@ -9,12 +9,14 @@ interface GameSettings {
     canvasWidth : number; // width of the game canvas in tiles
 }
 
-class Game {
+class Game implements ISerializable {
     public tileset : Tileset;
     public canvas : Canvas;
     public debug : Debug;
     public input : InputHandler;
     public palette : ColorPalette;
+
+    private cInput : CInput;
 
     settings : GameSettings;
 
@@ -29,6 +31,45 @@ class Game {
         this.canvas = this.createCanvas();
         this.input = new InputHandler(this.canvas.canvas);
         this.canvas.initializeComponents();
+        this.initializeComponents();
+    }
+
+    private initializeComponents() {
+        this.cInput = new CInput(null, this.onKeyPress.bind(this));
+    }
+
+    private onKeyPress(key : string) {
+        if (key === "S") {
+            this.saveGame("default");
+        } else 
+        if (key === "L") {
+            this.loadGame("default");
+        }
+    }
+
+    public saveGame(saveName : string) {
+        localStorage.setItem(saveName, this.serialize());
+    }
+
+    public loadGame(saveName : string) {
+        let item : string | null = localStorage.getItem(saveName);
+        if (item) {
+            this.unserialize(item);
+        } else {
+            game.debug.log("loading data failed");
+        }
+        // TODO catch errors and stuff
+    }
+
+    serialize() : string{
+        // TODO create object with version and shit
+        return this.canvas.serialize();
+    }
+
+    unserialize(data : string) : this{
+        // TODO create object with version and shit
+        this.canvas = this.canvas.unserialize(data); // might not actually change the canvas (look at implementation)
+        return this;
     }
 
     createTileset() : Tileset {
