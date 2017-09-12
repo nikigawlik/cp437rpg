@@ -2,7 +2,7 @@ class Player extends GameObject {
     private input : CInput;
     private world : GameWorld;
 
-    constructor(x : number, y : number, world : GameWorld) {
+    constructor(x : number, y : number, world : GameWorld) { // TODO remove world from constr
         super(x, y);
         this.world = world;
 

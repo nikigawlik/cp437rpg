@@ -1,0 +1,3 @@
+interface Continuous {
+    update() : void;
+}

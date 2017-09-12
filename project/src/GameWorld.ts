@@ -21,11 +21,32 @@ class GameWorld {
         
         let obj : any = JSON.parse(data); // TODO optimize this :'D
         let grid : Tile[][] = obj.displayGrid;
+        let aniBoxes : Rect[] = obj.aniBoxes? obj.aniBoxes : [];
+
+        //TODO don't hack
+        aniBoxes.push(new Rect(45, 13, 19, 8));
         
         for(let x = 0; x < obj.width; x++)
         for(let y = 0; y < obj.height; y++) {
             let tile : Tile = grid[x][y];
-            this.insertObject(new FloorTile(x, y, tile), 0); // TODO differing sizes save vs. game
+            let ani : boolean = false;
+            for(let box of aniBoxes) {
+                if (box.containsPoint(x, y)) {
+                    let tiles : Tile[] = [];
+                    for(let ibx = box.x + box.w - 1; ibx > box.x; ibx--) { // TODO name and stuff
+                        tiles.push(grid[ibx][y]);
+                    }
+                    let anitile : AnimatedFloorTile = new AnimatedFloorTile(x, y, tiles, tiles.length - 1 - (x - box.x));
+
+                    this.insertObject(anitile, 0); // TODO differing sizes save vs. game
+
+                    ani = true;
+                    break;
+                }
+            }
+            if (!ani) {
+                this.insertObject(new FloorTile(x, y, tile), 0); // TODO differing sizes save vs. game
+            }
         }
     }
 

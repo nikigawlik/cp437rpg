@@ -65,6 +65,8 @@ class Canvas implements ISerializable{
         // this.displayGrid[x][y].tileID = tile.tileID;
         // this.displayGrid[x][y].colorID = tile.colorID;
         // this.displayGrid[x][y].bgColorID = tile.bgColorID;
+
+        if(!tile) {return;}
         this.displayGrid[x][y] = {
             tileID: tile.tileID,
             colorID: tile.colorID,
