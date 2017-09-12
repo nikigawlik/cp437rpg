@@ -9,7 +9,7 @@ class Canvas implements ISerializable{
         this.width = Math.floor(width);
         this.height = Math.floor(height);
         
-        this.displayGrid = ArrayUtils.get2DArray<Tile>(this.width, this.height, {tileID: 0, colorID: 0, bgColorID: 0});
+        this.displayGrid = ArrayUtils.get2DArray<Tile>(this.width, this.height, new Tile(0, 0, 0));
         
         // initianlize canvas
         this.canvas = document.createElement("canvas");
@@ -61,17 +61,8 @@ class Canvas implements ISerializable{
     }
 
     setTile(x : number, y: number, tile : Tile) {
-        // TODO why this shit no work???
-        // this.displayGrid[x][y].tileID = tile.tileID;
-        // this.displayGrid[x][y].colorID = tile.colorID;
-        // this.displayGrid[x][y].bgColorID = tile.bgColorID;
-
         if(!tile) {return;}
-        this.displayGrid[x][y] = {
-            tileID: tile.tileID,
-            colorID: tile.colorID,
-            bgColorID: tile.bgColorID,
-        };
+        this.displayGrid[x][y] = tile.clone(); //TODO is cloning bad here?
         this.refreshTile(x, y);
     }
 

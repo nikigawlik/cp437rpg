@@ -77,11 +77,7 @@ class GameWorld {
         if (this.objectGrid[x][y].length !== 0) {
             tile = this.objectGrid[x][y][this.objectGrid[x][y].length-1].tile;
         } else {
-            tile = {
-                tileID: 0,
-                colorID: 0,
-                bgColorID: 0,
-            };
+            tile = new Tile(0, 0, 0);
         }
         this.canvas.setTile(x, y, tile);
     }

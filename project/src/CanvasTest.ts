@@ -27,14 +27,14 @@ class CanvasTest {
             } else 
             if (serial < 256 + game.palette.numberOfCOlors) {
                 colorID = serial - 256;
-                tileID = Tiles.Full;
+                tileID = Chars.Full;
             } else
             if (serial < 256 + game.palette.numberOfCOlors * 2) {
 
                 bgColorId = serial - 256 - game.palette.numberOfCOlors;
-                tileID = Tiles.Square;
+                tileID = Chars.Square;
             }
-            canvas.setTile(x, y, {tileID: tileID, colorID: colorID, bgColorID: bgColorId});
+            canvas.setTile(x, y, new Tile(tileID, colorID, bgColorId));
         }
     }
 
@@ -61,11 +61,7 @@ class CanvasTest {
         let tile : Tile = game.canvas.getTileAt(xx, yy);
 
         if (this.tile === null || game.input.isDown("Control")) {
-            this.tile = {
-                tileID: tile.tileID,
-                colorID: tile.colorID,
-                bgColorID: tile.bgColorID,
-            };
+            this.tile = tile.clone();
         } else
         if (serial < 256) {
             this.tile.tileID = tile.tileID;

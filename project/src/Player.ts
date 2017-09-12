@@ -6,11 +6,7 @@ class Player extends GameObject {
         super(x, y);
         this.world = world;
 
-        this.tile = {
-            tileID: Tiles.At,
-            colorID: 15,
-            bgColorID : 0,
-        }
+        this.tile = new Tile(Chars.At, 15, 0);
 
         this.initComponents();
     }
