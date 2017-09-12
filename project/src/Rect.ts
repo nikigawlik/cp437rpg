@@ -9,4 +9,8 @@ class Rect {
         this.w = w;
         this.h = h;
     }
+
+    public containsPoint(x : number, y : number) {
+        return x >= this.x && x < this.x + this.w && y > this.y && y < this.y + this.h;
+    }
 }
