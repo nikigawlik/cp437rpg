@@ -22,7 +22,7 @@ class CanvasTest {
             let bgColorId = 0;
 
             if (serial < 256) {
-                colorID = game.palette.numberOfCOlors - 1; // TODO name colors or something
+                colorID = Colors.white;
                 tileID = y * game.settings.canvasWidth + x;
             } else 
             if (serial < 256 + game.palette.numberOfCOlors) {
