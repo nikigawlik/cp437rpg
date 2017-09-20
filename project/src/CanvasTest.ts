@@ -40,10 +40,7 @@ class CanvasTest {
 
     
     initializeComponents() {
-        this.cInput = new CInput(
-            (x : number, y : number) => this.onClick(x, y),
-            (key : string) => this.processKey(key) // TODO proper stuff
-            );
+        this.cInput = new CInput(this.onClick.bind(this), this.processKey.bind(this));
     }
 
     private processKey(key : string) {
