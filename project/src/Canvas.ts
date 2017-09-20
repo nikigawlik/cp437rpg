@@ -39,23 +39,50 @@ class Canvas implements ISerializable{
     }
 
     serialize() : string {
+        let rawData : string = "";
+
+        for(let x : number = 0; x < this.width; x++) {
+            for(let y : number = 0; y < this.height; y++) {
+                let tile : Tile = this.displayGrid[x][y];
+
+                rawData += SerializationUtils.numberToHex(tile.tileID, 2)
+                    + SerializationUtils.numberToHex(tile.colorID, 1) 
+                    + SerializationUtils.numberToHex(tile.bgColorID, 1);
+            }
+        }
+
         let obj = { // TODO interface
-            displayGrid: this.displayGrid, // TODO use function to access just in case
-            version: 0,
+            rawData: rawData, // TODO use function to access just in case
+            version: 1,
             width: this.width,
-            height: this.height,  
+            height: this.height,
         };
         return JSON.stringify(obj);
     }
 
     unserialize(data : string) : this {
-        let obj : any = JSON.parse(data); // TODO optimize this :'D
-        let grid : Tile[][] = ArrayUtils.get2DArrayDynamic(obj.width, obj.height,
-            (x : number, y : number) => new Tile(obj.displayGrid[x][y].tileID, obj.displayGrid[x][y].colorID, obj.displayGrid[x][y].bgColorID));
-        
-        for(let x = 0; x < obj.width; x++)
-        for(let y = 0; y < obj.height; y++) {
-            this.setTile(x, y, grid[x][y]);
+        let obj : any = JSON.parse(data); 
+        let version : number = obj.version;
+        if(version === 0) {
+            let grid : Tile[][] = ArrayUtils.get2DArrayDynamic(obj.width, obj.height,
+                (x : number, y : number) => new Tile(obj.displayGrid[x][y].tileID, 
+                obj.displayGrid[x][y].colorID, obj.displayGrid[x][y].bgColorID));
+            
+                for(let x = 0; x < obj.width; x++)
+                for(let y = 0; y < obj.height; y++) {
+                    this.setTile(x, y, grid[x][y]);
+                }
+        } else if (version === 1) {
+            let str : string = obj.rawData;
+
+            for(let x = 0; x < obj.width; x++)
+            for(let y = 0; y < obj.height; y++) {
+                let pos : number = (obj.height * x + y) * 4;
+                let tileID : number = SerializationUtils.hexToNumber(str.substring(pos, pos + 2));
+                let colorID : number = SerializationUtils.hexToNumber(str.substring(pos + 2, pos + 3));
+                let bgColorID : number = SerializationUtils.hexToNumber(str.substring(pos + 3, pos + 4));
+                this.setTile(x, y, new Tile(tileID, colorID, bgColorID));
+            }
         }
 
         return this;
