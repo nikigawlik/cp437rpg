@@ -50,7 +50,8 @@ class Canvas implements ISerializable{
 
     unserialize(data : string) : this {
         let obj : any = JSON.parse(data); // TODO optimize this :'D
-        let grid : Tile[][] = obj.displayGrid;
+        let grid : Tile[][] = ArrayUtils.get2DArrayDynamic(obj.width, obj.height,
+            (x : number, y : number) => new Tile(obj.displayGrid[x][y].tileID, obj.displayGrid[x][y].colorID, obj.displayGrid[x][y].bgColorID));
         
         for(let x = 0; x < obj.width; x++)
         for(let y = 0; y < obj.height; y++) {

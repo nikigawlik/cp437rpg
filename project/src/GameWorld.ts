@@ -28,13 +28,14 @@ class GameWorld {
         
         for(let x = 0; x < obj.width; x++)
         for(let y = 0; y < obj.height; y++) {
-            let tile : Tile = grid[x][y];
+            let tile : Tile = new Tile(grid[x][y].tileID, grid[x][y].colorID, grid[x][y].bgColorID);
             let ani : boolean = false;
             for(let box of aniBoxes) {
                 if (box.containsPoint(x, y)) {
                     let tiles : Tile[] = [];
                     for(let ibx = box.x + box.w - 1; ibx > box.x; ibx--) { // TODO name and stuff
-                        tiles.push(grid[ibx][y]);
+                        let gridObj = grid[ibx][y];
+                        tiles.push(new Tile(gridObj.tileID, gridObj.colorID, gridObj.bgColorID));
                     }
                     let anitile : AnimatedFloorTile = new AnimatedFloorTile(x, y, tiles, tiles.length - 1 - (x - box.x));
 
