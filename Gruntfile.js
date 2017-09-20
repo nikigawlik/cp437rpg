@@ -30,7 +30,11 @@ module.exports = function (grunt) {
                 tsconfig: "project/src/tsconfig.json",
                 options: {
                     rootDir: 'project/src',
+                    alwaysStrict: true,
                     strictNullChecks: true,
+                    noImplicitAny: true,
+                    noImplicitThis: true,
+                    noImplicitReturns: true,
                 }
             }
         },

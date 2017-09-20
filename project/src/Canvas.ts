@@ -73,7 +73,7 @@ class Canvas implements ISerializable{
         return this.displayGrid[x][y];
     }
 
-    private refreshTile(x, y) {
+    private refreshTile(x : number, y : number) {
         let ctx : CanvasRenderingContext2D | null = this.canvas.getContext("2d");
         if (!ctx) {return;}
 
