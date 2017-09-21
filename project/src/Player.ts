@@ -1,10 +1,8 @@
 class Player extends GameObject {
     private input : CInput;
-    private world : GameWorld;
 
-    constructor(x : number, y : number, world : GameWorld) { // TODO remove world from constr
+    constructor(x : number, y : number) {
         super(x, y);
-        this.world = world;
 
         this.tile = new Tile(Chars.At, 15, 0);
 
@@ -30,9 +28,9 @@ class Player extends GameObject {
     }
 
     public moveRelative(dx : number, dy : number) {
-        this.world.removeObject(this);
+        game.world.removeObject(this);
         this.x += dx;
         this.y += dy;
-        this.world.addObject(this);
+        game.world.addObject(this);
     }
 }

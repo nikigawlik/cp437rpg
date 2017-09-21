@@ -51,8 +51,8 @@ class Canvas implements ISerializable{
             }
         }
 
-        let obj = { // TODO interface
-            rawData: rawData, // TODO use function to access just in case
+        let obj = { // TODO write this wrapper as a class to allow type checking in the save system
+            rawData: rawData,
             version: 1,
             width: this.width,
             height: this.height,
@@ -90,7 +90,7 @@ class Canvas implements ISerializable{
 
     setTile(x : number, y: number, tile : Tile) {
         if(!tile) {return;}
-        this.displayGrid[x][y] = tile.clone(); //TODO is cloning bad here?
+        this.displayGrid[x][y] = tile.clone();
         this.refreshTile(x, y);
     }
 

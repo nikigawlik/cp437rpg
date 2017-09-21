@@ -48,16 +48,14 @@ class Game implements ISerializable {
         } else {
             game.debug.log("loading data failed");
         }
-        // TODO catch errors and stuff
+        // TODO (now) catch errors and stuff
     }
 
     serialize() : string{
-        // TODO create object with version and shit
         return this.canvas.serialize();
     }
 
     unserialize(data : string) : this{
-        // TODO create object with version and shit
         this.canvas = this.canvas.unserialize(data); // might not actually change the canvas (look at implementation)
         return this;
     }

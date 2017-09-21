@@ -16,15 +16,21 @@ class GameWorld {
     public loadFromSave(saveName : string) {
         this.fillGridEmpty();
 
-        let data : string | null = localStorage.getItem(saveName);
-        if (!data) {return;}
+        // let data : string | null = localStorage.getItem(saveName);
+        // if (!data) {return;}
         
-        let obj : any = JSON.parse(data); // TODO optimize this :'D
+        // let obj : any = JSON.parse(data);
+
+        // TODO permanent solution
+        let obj = {
+            displayGrid: game.canvas.displayGrid,
+            aniBoxes: [new Rect(45, 13, 19, 8)], // TODO remove this test value (implement aniboxes in editor/save)
+            width: game.canvas.width,
+            height: game.canvas.height,
+        }
+
         let grid : Tile[][] = obj.displayGrid;
         let aniBoxes : Rect[] = obj.aniBoxes? obj.aniBoxes : [];
-
-        //TODO don't hack
-        aniBoxes.push(new Rect(45, 13, 19, 8));
         
         for(let x = 0; x < obj.width; x++)
         for(let y = 0; y < obj.height; y++) {
@@ -33,8 +39,8 @@ class GameWorld {
             for(let box of aniBoxes) {
                 if (box.containsPoint(x, y)) {
                     let tiles : Tile[] = [];
-                    for(let ibx = box.x + box.w - 1; ibx > box.x; ibx--) { // TODO name and stuff
-                        let gridObj = grid[ibx][y];
+                    for(let offsetX = box.x + box.w - 1; offsetX > box.x; offsetX--) {
+                        let gridObj = grid[offsetX][y];
                         tiles.push(new Tile(gridObj.tileID, gridObj.colorID, gridObj.bgColorID));
                     }
                     let anitile : AnimatedFloorTile = new AnimatedFloorTile(x, y, tiles, tiles.length - 1 - (x - box.x));

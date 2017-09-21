@@ -47,7 +47,7 @@ class CanvasTest {
         game.debug.log("key: " + key)
 
         if (key === "Shift") {
-            this.selection = null; // TODO do this in an "up" event (for clarity and robustness)
+            this.selection = null; // TODO (now) do this in an "up" event (for clarity and robustness)
         }
     }
 
