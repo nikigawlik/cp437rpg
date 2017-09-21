@@ -7,11 +7,11 @@ interface GameSettings {
     colorPalette : string[], // list of color names or hex codes in the default palette
     canvasHeight : number; // height of the game canvas in tiles
     canvasWidth : number; // width of the game canvas in tiles
-    fitCanvas : boolean,
-    canvasScale : number,
-    numberOfColors : number,
-    numberOfTiles : number,
-    framerate : number,
+    fitCanvas : boolean, // should the canvas be scaled to fit the page
+    canvasScale : number, // scale of the canvas (when fitCanvas is false), ratio of canvas pixels to CSS style pixels
+    numberOfColors : number, // maximum number of colors in the palette
+    numberOfTiles : number, // maximum number of tiles on the tileset
+    framerate : number, // update rate in frames per second
 }
 
 class SettingsManager {
