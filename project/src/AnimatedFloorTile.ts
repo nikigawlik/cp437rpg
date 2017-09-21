@@ -6,14 +6,9 @@ class AnimatedFloorTile extends GameObject implements Continuous{
         super(x, y);
         this.tiles = tiles;
         this.currentIndex = startIndex || 0;
-        this.tile = this.tiles[this.currentIndex]; // TODO safety
+        this.update();
 
-        let self = this;
-        window.setTimeout( // TODO : ohnononono
-            window.setInterval(function() {
-                self.update();
-            },
-            125), 125);
+        game.addContinuous(this);
     }
 
     public update() {

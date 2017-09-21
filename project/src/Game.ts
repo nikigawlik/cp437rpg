@@ -7,11 +7,13 @@ class Game implements ISerializable {
     public world : GameWorld;
 
     private cInput : CInput;
+    private updateList : Continuous[];
 
     settings : GameSettings;
 
     constructor(settings : GameSettings) {
         this.settings = settings;
+        this.updateList = [];
     }
 
     intialize() : void{
@@ -22,6 +24,8 @@ class Game implements ISerializable {
         this.world = new GameWorld(this.settings.canvasWidth, this.settings.canvasHeight, this.canvas); // TODO make world width variable from canvas
         this.input = new InputHandler(this.canvas.canvas);
         this.initializeComponents();
+        
+        window.setInterval(this.update.bind(this), 1000 / game.settings.framerate)
     }
 
     private initializeComponents() {
@@ -71,5 +75,19 @@ class Game implements ISerializable {
 
     createCanvas() : Canvas {
         return new Canvas(this.settings.canvasWidth, this.settings.canvasHeight);
+    }
+
+    public addContinuous(obj : Continuous) {
+        this.updateList.push(obj);
+    }
+
+    public removeContinuous(obj : Continuous) {
+        this.updateList.splice(this.updateList.indexOf(obj), 1);
+    }
+
+    private update() {
+        for(let obj of this.updateList) {
+            obj.update();
+        }
     }
 }

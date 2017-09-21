@@ -11,6 +11,7 @@ interface GameSettings {
     canvasScale : number,
     numberOfColors : number,
     numberOfTiles : number,
+    framerate : number,
 }
 
 class SettingsManager {
@@ -33,6 +34,7 @@ class SettingsManager {
             canvasHeight: 32,
             fitCanvas: false,
             canvasScale: 1.6,
+            framerate: 30,
         };
     }
 }
