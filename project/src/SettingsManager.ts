@@ -24,8 +24,8 @@ class SettingsManager {
             tilesetTileHeight: 12,
             colorPalette: [
                 "#000", "#f00", "#0f0", "#00f",
-                "#ff0", "#0ff", "#f0f", "#000",
-                "#000", "#000", "#000", "#000",
+                "#ff0", "#0ff", "#f0f", "#800",
+                "#080", "#008", "#884", "#848",
                 "#444", "#888", "#ccc", "#fff",
                 ],
             numberOfColors: 16,
