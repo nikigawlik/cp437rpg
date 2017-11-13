@@ -17,20 +17,13 @@ class Player extends GameObject {
         let dx = 0;
         let dy = 0;
         switch (key) {
-            case "w": dx = 0; dy = -1; break;
-            case "a": dx = -1; dy = 0; break;
-            case "s": dx = 0; dy = 1; break;
-            case "d": dx = 1; dy = 0; break;
+            case "w": dy = -1; break;
+            case "a": dx = -1; break;
+            case "s": dy = 1; break;
+            case "d": dx = 1; break;
             default: return;
         }
 
         this.moveRelative(dx, dy);
-    }
-
-    public moveRelative(dx : number, dy : number) {
-        game.world.removeObject(this);
-        this.x += dx;
-        this.y += dy;
-        game.world.addObject(this);
     }
 }

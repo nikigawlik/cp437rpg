@@ -15,13 +15,7 @@ class GameWorld {
 
     public loadFromSave(saveName : string) {
         this.fillGridEmpty();
-
-        // let data : string | null = localStorage.getItem(saveName);
-        // if (!data) {return;}
         
-        // let obj : any = JSON.parse(data);
-
-        // TODO permanent solution
         let obj = {
             displayGrid: game.canvas.displayGrid,
             aniBoxes: [new Rect(45, 13, 19, 8)], // TODO remove this test value (implement aniboxes in editor/save)
