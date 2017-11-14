@@ -13,6 +13,34 @@ class GameWorld {
         this.fillGridEmpty();
     }
 
+    // will probably come in handy later
+    // public getHeightAt(x : number, y : number) : number {
+    //     let stack : GameObject[] = this.objectGrid[x][y];
+        
+    //     if (stack.length === 0) {
+    //         return 0;
+    //     }
+
+    //     let biggest : GameObject = stack.reduce(function(a : GameObject, b : GameObject) { 
+    //         return a.collisionHeight > b.collisionHeight? a : b;
+    //     }
+    //     );
+
+    //     return biggest.collisionHeight;
+    // }
+
+    public canEnter(obj: GameObject, x : number, y : number) : boolean{
+        let stack : GameObject[] = this.objectGrid[x][y];
+        
+        if (stack.length === 0) {
+            return true;
+        }
+
+        let other = stack[stack.length - 1];
+
+        return Math.abs(obj.collisionHeight) + Math.abs(other.collisionHeight) < 1;  // definition of collision formula
+    }
+
     public loadFromSave(saveName : string) {
         this.fillGridEmpty();
         
@@ -46,7 +74,13 @@ class GameWorld {
                 }
             }
             if (!ani) {
-                this.insertObject(new Floor(x, y, tile), 0); // TODO differing sizes save vs. game
+                // stupid heuristic for testing
+                if (tile.tileID > 179) {
+                    this.insertObject(new Wall(x, y, tile), 0); // TODO differing sizes save vs. game
+                }
+                else {
+                    this.insertObject(new Floor(x, y, tile), 0); // TODO differing sizes save vs. game
+                }
             }
         }
     }
