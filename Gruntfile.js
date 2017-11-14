@@ -19,7 +19,6 @@ module.exports = function (grunt) {
                 cwd: 'project/src/',
                 src: ['**/*'],
                 dest: 'project/test/',
-                flatten: true,
                 filter: 'isFile',
             },
         },
@@ -34,7 +33,7 @@ module.exports = function (grunt) {
                     strictNullChecks: true,
                     noImplicitAny: true,
                     noImplicitThis: true,
-                    noImplicitReturns: true,
+                    noImplicitReturns: true, 
                 }
             }
         },

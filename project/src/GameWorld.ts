@@ -37,7 +37,7 @@ class GameWorld {
                         let gridObj = grid[offsetX][y];
                         tiles.push(new Tile(gridObj.tileID, gridObj.colorID, gridObj.bgColorID));
                     }
-                    let anitile : AnimatedFloorTile = new AnimatedFloorTile(x, y, tiles, tiles.length - 1 - (x - box.x));
+                    let anitile : AnimatedFloor = new AnimatedFloor(x, y, tiles, tiles.length - 1 - (x - box.x));
 
                     this.insertObject(anitile, 0); // TODO differing sizes save vs. game
 
@@ -46,7 +46,7 @@ class GameWorld {
                 }
             }
             if (!ani) {
-                this.insertObject(new FloorTile(x, y, tile), 0); // TODO differing sizes save vs. game
+                this.insertObject(new Floor(x, y, tile), 0); // TODO differing sizes save vs. game
             }
         }
     }

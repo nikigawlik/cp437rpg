@@ -2,10 +2,12 @@ class GameObject {
     public x : number;
     public y : number;
     public tile : Tile;
+    protected collisionHeight : number; // 0 for flat, 1 for solid, 0.X for slab, -0.X for tunnel
 
     constructor(x : number, y : number) {
         this.x = x;
         this.y = y;
+        this.collisionHeight = 0.5;
         game.world.addObject(this);
     }
 
