@@ -44,7 +44,7 @@ class Player extends GameObject implements Continuous {
         }
 
         if ((dx || dy) && this.moveCounter === 0) {
-            this.moveCounter = this.moveDelay + 1;
+            this.moveCounter = this.moveDelay;
             this.moveRelative(dx, dy);
         }
 

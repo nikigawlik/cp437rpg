@@ -18,8 +18,8 @@ class Gun extends GameObject implements Continuous {
         if (this.cooldown > 0) { return; }
         this.cooldown = this.shootDelay;
 
-        let dx : number = this.direction === 0 ? 1 : (this.direction === 2 ? -1 : 0);
-        let dy : number = this.direction === 3 ? 1 : (this.direction === 1 ? -1 : 0);
+        let dx : number = Utils.dxFromD(this.direction);
+        let dy : number = Utils.dyFromD(this.direction);
 
         for(let i : number = 0; i < this.range; i++) {
             let xx : number = this.x + dx * (i + 1);

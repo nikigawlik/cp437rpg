@@ -15,7 +15,7 @@ class GameWorld {
 
     // will probably come in handy later
     // public getHeightAt(x : number, y : number) : number {
-    //     let stack : GameObject[] = this.objectGrid[x][y];
+    //     let stack : GameObject[] = this.getObjectsAt(x, y);
         
     //     if (stack.length === 0) {
     //         return 0;
@@ -30,7 +30,7 @@ class GameWorld {
     // }
 
     public canEnter(obj: GameObject, x : number, y : number) : boolean{
-        let stack : GameObject[] = this.objectGrid[x][y];
+        let stack : GameObject[] = this.getObjectsAt(x, y);
         
         if (stack.length === 0) {
             return true;
@@ -87,6 +87,10 @@ class GameWorld {
                 if (y * obj.width + x < 256) {
                     // do nothing
                 }
+                else if (tile.tileID === 71) {
+                    new Floor(x, y, new Tile(0, 0, tile.bgColorID)); // TODO differing sizes save vs. game
+                    new Goblin(x, y);
+                }
                 else if (tile.tileID === Chars.At) {
                     new Floor(x, y, new Tile(0, 0, tile.bgColorID)); // TODO differing sizes save vs. game
                     new Player(x, y);
@@ -116,7 +120,7 @@ class GameWorld {
     }
 
     public removeObject(obj : GameObject) {
-        let stack : GameObject[] = this.objectGrid[obj.x][obj.y];
+        let stack : GameObject[] = this.getObjectsAt(obj.x, obj.y);
         let index : number = stack.indexOf(obj);
         if (index === -1) {return;}
         stack.splice(index, 1);
@@ -124,20 +128,31 @@ class GameWorld {
     }
 
     public refreshAtPos(x : number, y : number) {
-        let tiles : GameObject[] = this.objectGrid[x][y];
-        let tile : Tile = Tile.EMPTY;
-
-        for (let i : number = tiles.length - 1; i >= 0; i--) {
-            if (tiles[i].visible) {
-                tile = tiles[i].tile;
-                break;
-            }
-        }
-
+        let obj : GameObject | null = this.getTopAt(x, y);
+        let tile : Tile = obj != null? obj.tile : Tile.EMPTY;
         this.canvas.setTile(x, y, tile);
     }
 
     public getObjectsAt(x : number, y : number) : GameObject[] {
+        if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
+            return [];
+        }
+
         return this.objectGrid[x][y];
+    }
+
+    public getTopAt(x : number, y : number) : GameObject | null {
+        let objects : GameObject[] = this.getObjectsAt(x, y);
+
+        let obj = null;
+
+        for (let i : number = objects.length - 1; i >= 0; i--) {
+            if (objects[i].visible) {
+                obj = objects[i];
+                break;
+            }
+        }
+
+        return obj
     }
 }
