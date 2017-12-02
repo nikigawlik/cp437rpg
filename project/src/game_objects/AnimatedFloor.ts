@@ -1,4 +1,4 @@
-class AnimatedFloor extends GameObject implements Continuous{
+class AnimatedFloor extends GameObject implements Continuous {
     private tiles : Tile[];
     private currentIndex : number;
 

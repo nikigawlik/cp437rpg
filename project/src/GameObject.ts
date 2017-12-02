@@ -10,9 +10,6 @@ class GameObject {
         this.collisionHeight = 0.5;
         game.world.addObject(this);
     }
-
-    public onStep() {
-    }
     
     public moveRelative(dx : number, dy : number) {
         // check some collisions

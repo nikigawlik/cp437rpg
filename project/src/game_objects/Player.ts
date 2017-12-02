@@ -1,4 +1,4 @@
-class Player extends GameObject {
+class Player extends GameObject implements Continuous {
     private input : CInput;
 
     constructor(x : number, y : number) {
@@ -7,6 +7,8 @@ class Player extends GameObject {
         this.tile = new Tile(Chars.At, 15, 0);
 
         this.initComponents();
+
+        game.addContinuous(this);
     }
 
     private initComponents() {
@@ -14,14 +16,23 @@ class Player extends GameObject {
     }
 
     private onKeyPress(key : string) {
+    }
+
+    public update() {
         let dx = 0;
         let dy = 0;
-        switch (key) {
-            case "w": dy = -1; break;
-            case "a": dx = -1; break;
-            case "s": dy = 1; break;
-            case "d": dx = 1; break;
-            default: return;
+
+        if (this.input.isDown("w")) {
+            dy = -1;
+        }
+        if (this.input.isDown("a")) {
+            dx = -1;
+        }
+        if (this.input.isDown("s")) {
+            dy = 1;
+        }
+        if (this.input.isDown("d")) {
+            dx = 1;
         }
 
         this.moveRelative(dx, dy);
