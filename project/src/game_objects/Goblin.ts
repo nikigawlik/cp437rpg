@@ -8,7 +8,7 @@ class Goblin extends GameObject implements Continuous {
     private moveDelay : number = 6;
 
     constructor(x : number, y : number) {
-        super(x, y, new Tile(71, 15, 0))
+        super(x, y, new Tile(71, 2, 0))
         game.addContinuous(this);
 
         this.aiCounter = this.aiDelay;
@@ -46,24 +46,12 @@ class Goblin extends GameObject implements Continuous {
 
             // move lateral normally and straight when aligned
             if (Math.abs(dify) < Math.abs(difx)) {
-                if (dify != 0) {
-                    dx = 0;
-                    dy = Utils.sign(dify);
-                } 
-                else {
-                    dx = Utils.sign(difx);
-                    dy = 0;
-                }
+                dx = Utils.sign(difx);
+                dy = 0;
             } 
-            if (Math.abs(difx) < Math.abs(dify)) {
-                if (difx != 0) {
-                    dx = Utils.sign(difx);
-                    dy = 0;
-                } 
-                else {
-                    dx = 0;
-                    dy = Utils.sign(dify);
-                }
+            else {
+                dx = 0;
+                dy = Utils.sign(dify);
             }
         }
 
