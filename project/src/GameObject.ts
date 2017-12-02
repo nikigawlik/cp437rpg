@@ -13,12 +13,12 @@ class GameObject {
         game.world.addObject(this);
     }
 
-    public move(x : number, y : number) {
+    public move(x : number, y : number) : boolean {
         // check some collisions
         if(x > game.world.width-1 || x < 0
         || y > game.world.height-1 || y < 0
         || !game.world.canEnter(this, x, y)) {
-            return;    
+            return false;    
         }
 
         // all ok
@@ -26,9 +26,11 @@ class GameObject {
         this.x = x;
         this.y = y;
         game.world.addObject(this);
+
+        return true;
     }
     
-    public moveRelative(dx : number, dy : number) {
-        this.move(this.x + dx, this.y + dy);
+    public moveRelative(dx : number, dy : number) : boolean {
+        return this.move(this.x + dx, this.y + dy);
     }
 }

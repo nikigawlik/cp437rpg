@@ -64,21 +64,18 @@ class Goblin extends GameObject implements Continuous {
             let difx : number = this.target.x - this.x;
             let dify : number = this.target.y - this.y;
 
-            // move lateral normally and straight when aligned
-            if (Math.abs(dify) < Math.abs(difx)) {
-                dx = Utils.sign(difx);
-                dy = 0;
-            } 
-            else {
-                dx = 0;
-                dy = Utils.sign(dify);
-            }
+            dx = Utils.sign(difx);
+            dy = Utils.sign(dify);
         }
 
         this.moveCounter = Math.max(this.moveCounter - 1, 0);
         if (this.moveCounter === 0 && (dx != 0 || dy != 0)) {
             this.moveCounter = this.moveDelay;
-            this.moveRelative(dx, dy);
+            let didMove = this.moveRelative(dx, dy);
+            if (!didMove) {
+                this.moveRelative(dx, 0);
+                this.moveRelative(0, dy);
+            }
         }
     }
 
