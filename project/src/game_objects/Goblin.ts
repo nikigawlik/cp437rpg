@@ -8,6 +8,8 @@ class Goblin extends GameObject implements Continuous {
     private aiDelay = 15;
     private visionRange = 12;
     private target : GameObject | null = null;
+    private targetLastX : number = 0;
+    private targetLastY : number = 0;
 
     private moveCounter : number = 0;
     private moveDelay : number = 6;
@@ -51,6 +53,9 @@ class Goblin extends GameObject implements Continuous {
                         this.cantSeeCounter = this.cantSeeDelay;
                         this.target = null;
                     }
+                } else {
+                    // reset target
+                    this.setTarget(this.target);
                 }
             break;
         }
@@ -61,8 +66,8 @@ class Goblin extends GameObject implements Continuous {
 
         // TODO check dead target
         if (this.target !== null) {
-            let difx : number = this.target.x - this.x;
-            let dify : number = this.target.y - this.y;
+            let difx : number = this.targetLastX - this.x;
+            let dify : number = this.targetLastY - this.y;
 
             dx = Utils.sign(difx);
             dy = Utils.sign(dify);
@@ -89,10 +94,16 @@ class Goblin extends GameObject implements Continuous {
             if (obj !== null && obj instanceof Player) {
                 // calc line of sight
                 if (game.world.canSee(this.x, this.y, obj.x, obj.y)) {
-                    this.target = obj;
+                    this.setTarget(obj);
                     done = true;
                 }
             }
         }
+    }
+
+    private setTarget(target : GameObject) {
+        this.target = target;
+        this.targetLastX = this.target.x;
+        this.targetLastY = this.target.y;
     }
 }
