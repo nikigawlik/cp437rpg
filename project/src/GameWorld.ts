@@ -46,7 +46,8 @@ class GameWorld {
         
         let obj = {
             displayGrid: game.canvas.displayGrid,
-            aniBoxes: [new Rect(45, 13, 19, 8)], // TODO remove this test value (implement aniboxes in editor/save)
+            // aniBoxes: [new Rect(45, 13, 19, 8)], // TODO remove this test value (implement aniboxes in editor/save)
+            aniBoxes: [],
             width: game.canvas.width,
             height: game.canvas.height,
         }
@@ -58,6 +59,13 @@ class GameWorld {
         for(let y = 0; y < obj.height; y++) {
             let tile : Tile = new Tile(grid[x][y].tileID, grid[x][y].colorID, grid[x][y].bgColorID);
             let ani : boolean = false;
+            
+            // TODO remove this when no longer needed
+            // Change tiles that appear empty to actually be the empty tile
+            if (tile.bgColorID === tile.colorID) {
+                tile.tileID = 0;
+            }
+
             for(let box of aniBoxes) {
                 if (box.containsPoint(x, y)) {
                     let tiles : Tile[] = [];
@@ -73,13 +81,21 @@ class GameWorld {
                     break;
                 }
             }
+
             if (!ani) {
                 // stupid heuristic for testing
-                if (tile.tileID > 179) {
-                    this.insertObject(new Wall(x, y, tile), 0); // TODO differing sizes save vs. game
+                if (y * obj.width + x < 256) {
+                    // do nothing
+                }
+                else if (tile.tileID === Chars.At) {
+                    new Floor(x, y, new Tile(0, 0, tile.bgColorID)); // TODO differing sizes save vs. game
+                    new Player(x, y);
+                }
+                else if (tile.tileID > 179) {
+                    new Wall(x, y, tile); // TODO differing sizes save vs. game
                 }
                 else {
-                    this.insertObject(new Floor(x, y, tile), 0); // TODO differing sizes save vs. game
+                    new Floor(x, y, tile); // TODO differing sizes save vs. game
                 }
             }
         }
@@ -115,5 +131,9 @@ class GameWorld {
             tile = new Tile(0, 0, 0);
         }
         this.canvas.setTile(x, y, tile);
+    }
+
+    public getObjectsAt(x : number, y : number) : GameObject[] {
+        return this.objectGrid[x][y];
     }
 }

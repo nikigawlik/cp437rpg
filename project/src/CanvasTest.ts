@@ -60,6 +60,9 @@ class CanvasTest {
         if (this.tile === null || game.input.isDown("Control")) {
             this.tile = tile.clone();
         } else
+        if (game.input.isDown("Alt")) {
+            console.log(game.world.getObjectsAt(xx, yy));
+        } else
         if (serial < 256) {
             this.tile.tileID = tile.tileID;
         } else 
