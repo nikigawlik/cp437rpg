@@ -1,5 +1,5 @@
 class Gun extends GameObject implements Continuous {
-    private range = 5;
+    private range = 64;
     private direction : number;
     private cooldown : number = 0;
     private shootDelay : number = 15;
