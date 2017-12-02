@@ -1,13 +1,15 @@
 class Player extends GameObject implements Continuous {
     private input : CInput;
 
+    private moveCounter = 0;
+    private moveDelay = 4;
+
     constructor(x : number, y : number) {
         super(x, y);
 
         this.tile = new Tile(Chars.At, 15, 0);
 
         this.initComponents();
-
         game.addContinuous(this);
     }
 
@@ -35,6 +37,11 @@ class Player extends GameObject implements Continuous {
             dx = 1;
         }
 
-        this.moveRelative(dx, dy);
+        if ((dx || dy) && this.moveCounter === 0) {
+            this.moveCounter = this.moveDelay + 1;
+            this.moveRelative(dx, dy);
+        }
+
+        this.moveCounter = Math.max(this.moveCounter - 1, 0);
     }
 }

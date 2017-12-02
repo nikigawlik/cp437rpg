@@ -91,7 +91,7 @@ class GameWorld {
                     new Floor(x, y, new Tile(0, 0, tile.bgColorID)); // TODO differing sizes save vs. game
                     new Player(x, y);
                 }
-                else if (tile.tileID > 179) {
+                else if (tile.tileID > 196) {
                     new Wall(x, y, tile); // TODO differing sizes save vs. game
                 }
                 else {
