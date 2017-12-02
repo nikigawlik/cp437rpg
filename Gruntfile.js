@@ -76,7 +76,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-file-dependencies');
 
     /**
-     * custom task to turn the .ts files into .js files
+     * custom task to turn the list of .ts filenames into .js filenames
      */
     grunt.registerTask('transposeOrderedFiles', function() {
         var files = grunt.config.get('file_dependencies.test.ordered_files');

@@ -56,7 +56,7 @@ class Game implements ISerializable {
     }
 
     serialize() : string{
-        return this.canvas.serialize();
+        return this.canvas.serialize(); // just not true :D
     }
 
     unserialize(data : string) : this{
