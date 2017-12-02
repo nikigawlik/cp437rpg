@@ -3,7 +3,7 @@ class AnimatedFloor extends GameObject implements Continuous {
     private currentIndex : number;
 
     constructor(x : number, y : number, tiles : Tile[], startIndex? : number) {
-        super(x, y);
+        super(x, y, tiles[0]);
         this.tiles = tiles;
         this.currentIndex = startIndex || 0;
         this.update();

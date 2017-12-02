@@ -6,6 +6,8 @@ enum Chars {
 }
 
 class Tile {
+    public static EMPTY = new Tile(0, 0, 0);
+
     tileID : number;
     colorID : number;
     bgColorID : number;

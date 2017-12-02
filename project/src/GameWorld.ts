@@ -124,12 +124,16 @@ class GameWorld {
     }
 
     public refreshAtPos(x : number, y : number) {
-        let tile : Tile;
-        if (this.objectGrid[x][y].length !== 0) {
-            tile = this.objectGrid[x][y][this.objectGrid[x][y].length-1].tile;
-        } else {
-            tile = new Tile(0, 0, 0);
+        let tiles : GameObject[] = this.objectGrid[x][y];
+        let tile : Tile = Tile.EMPTY;
+
+        for (let i : number = tiles.length - 1; i >= 0; i--) {
+            if (tiles[i].visible) {
+                tile = tiles[i].tile;
+                break;
+            }
         }
+
         this.canvas.setTile(x, y, tile);
     }
 
