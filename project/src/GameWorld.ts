@@ -29,7 +29,7 @@ class GameWorld {
     //     return biggest.collisionHeight;
     // }
 
-    public canEnter(obj: GameObject, x : number, y : number) : boolean{
+    public canEnter(obj: GameObject | null, x : number, y : number) : boolean{
         let stack : GameObject[] = this.getObjectsAt(x, y);
         
         if (stack.length === 0) {
@@ -38,7 +38,65 @@ class GameWorld {
 
         let other = stack[stack.length - 1];
 
-        return Math.abs(obj.collisionHeight) + Math.abs(other.collisionHeight) < 1;  // definition of collision formula
+        let height = obj !== null ? obj.collisionHeight : 0;
+
+        return Math.abs(height) + Math.abs(other.collisionHeight) < 1;  // definition of collision formula
+    }
+
+    public canSee(x1 : number, y1 : number, x2 : number, y2 : number) : boolean{
+        let startX : number;
+        let startY : number;
+        let endX : number;
+        let endY : number;
+        
+        if (x1 > x2) {
+            startX = x2 + 0.5;
+            startY = y2 + 0.5;
+            endX = x1 + 0.5;
+            endY = y1 + 0.5;
+        }
+        else {
+            startX = x1 + 0.5;
+            startY = y1 + 0.5;
+            endX = x2 + 0.5;
+            endY = y2 + 0.5;
+        }
+
+        let last : number = startY;
+        let current : number;
+        for(let i : number = 0; Math.abs(i) < Math.abs(endX - startX); i += Utils.sign(endX - startX)) {
+            let dx : number = i + 0.5;
+            let dy : number = (endY - startY) * i / (endX - startX);
+            current = startY + dy;
+
+            let xx : number = startX + dx;
+            if (this.testBounds(last, current, xx)) {
+                return false;
+            }
+
+            last = current;
+        }
+
+        current = endY;
+        
+        let xx : number = endX - 0.5;
+        if (this.testBounds(last, current, xx)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private testBounds(last : number, current: number, xx : number) : boolean {
+        let lower = Math.floor(Math.min(last, current));
+        let upper = Math.ceil(Math.max(last, current)) - 1;
+
+        for(let yy : number = lower; yy <= upper; yy++) {
+            if (!game.world.canEnter(null, xx, yy)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public loadFromSave(saveName : string) {

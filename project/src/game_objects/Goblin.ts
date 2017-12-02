@@ -1,7 +1,7 @@
 class Goblin extends GameObject implements Continuous {
     private aiCounter = 0;
     private aiDelay = 15;
-    private visionRange = 5;
+    private visionRange = 12;
     private target : GameObject | null = null;
 
     private moveCounter : number = 0;
@@ -18,18 +18,21 @@ class Goblin extends GameObject implements Continuous {
         this.aiCounter = Math.max(this.aiCounter - 1, 0);
         if (this.aiCounter === 0) {
             this.aiCounter = this.aiDelay
+            // lose old target
+            this.target = null;
             // scan for player
             let done : boolean = false;
             for (let dx : number = -this.visionRange; dx <= this.visionRange && !done; dx++) 
             for (let dy : number = -this.visionRange; dy <= this.visionRange && !done; dy++) {
                 let obj : GameObject | null = game.world.getTopAt(this.x + dx, this.y + dy);
                 if (obj !== null && obj instanceof Player) {
-                    this.target = obj;
-                    done = true;
+                    // calc line of sight
+                    if (game.world.canSee(this.x, this.y, obj.x, obj.y)) {
+                        this.target = obj;
+                        done = true;
+                    }
                 }
             }
-
-            // TODO scanline
         }
 
         // movement
